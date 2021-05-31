@@ -80,7 +80,17 @@ void versionInfo() {
   print(coloredInfo);
 }
 
-void runCode(String progName) {}
+Map<String, dynamic> runProgram(String progName) {
+  var parseTree = retrieveData(progName);
+  int parseTreeLength = parseTree.length;
+  Map<String, dynamic> result = {};
+  for (int i = 0; i < parseTreeLength; i++) {
+    Map<String, String> currentMap = parseTree[i];
+    String currentKey = currentMap.keys.elementAt(0);
+    String keyData = currentMap[currentKey];
+  }
+  return result;
+}
 
 String getFileContents(String fileName) {
   return File(fileName).readAsStringSync();
@@ -96,7 +106,7 @@ void main(List<String> arguments) {
       try {
         printColoredString(
             '${getEmoji('naughtyface')} Running your code...\n\n', 'cyan');
-        runCode(arguments[1]);
+        runProgram(arguments[0]);
       } catch (e) {
         printColoredString(
             '${getEmoji('angryFace')} No valid input files!\n\n', 'red');

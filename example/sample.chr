@@ -1,0 +1,29 @@
+prog start
+
+  ?? This is a comment.
+  message start => "1"
+    00FF88
+    0088AA
+  message end
+
+  compute start plus => "2"
+    00FF88
+    0088AA
+  compute end
+
+  compute start minus => "3"
+    00FF88
+    0088AA
+  compute end
+
+  compute start times => "4"
+    00FF88
+    0088AA
+  compute end
+
+  compute start by => "5"
+    00FF88
+    0088AA
+  compute end
+
+prog end

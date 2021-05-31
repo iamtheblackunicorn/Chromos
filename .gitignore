@@ -1,0 +1,8 @@
+.dart_tool/
+.packages
+build/
+*.lock
+*.exe
+*.bin
+chromos
+.DS_Store

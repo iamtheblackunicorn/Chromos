@@ -1,0 +1,9 @@
+name: chromos
+description: An esolang that ouputs data through hex numbers.
+version: 1.0.0
+homepage: https://github.com/iamtheblackunicorn/chromos
+environment:
+  sdk: '>=2.10.0 <3.0.0'
+dependencies:
+  harpo: ^2.1.0
+  termstyle: ^1.8.1

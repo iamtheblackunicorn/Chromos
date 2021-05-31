@@ -51,7 +51,7 @@ $ git clone https://github.com/iamtheblackunicorn/Chromos.git
 
 If you're using the Atom editor, please visit [this repository](https://github.com/iamtheblackunicorn/language-chromos).
 
-### Language tour :book:
+## Language tour :book:
 
 *Chromos* is a very minimal language and its programs end in `*.chr`.
 

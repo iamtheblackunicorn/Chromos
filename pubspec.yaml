@@ -1,7 +1,7 @@
 name: chromos
 description: An esolang that ouputs data through hex numbers.
 version: 1.0.0
-homepage: https://github.com/iamtheblackunicorn/chromos
+homepage: https://github.com/iamtheblackunicorn/Chromos
 environment:
   sdk: '>=2.10.0 <3.0.0'
 dependencies:

@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:harpo/harpo.dart';
+import 'package:termstyle/termstyle.dart';
 
 Map<String,String> getPatternData(
   String patternName,
@@ -73,23 +75,54 @@ List<String> tokenList(List<Map<String,String>> tokens){
   return result;
 }
 
-List<Map<String, dynamic>> executePrg(String fileName){
-  List<Map<String, dynamic>> result = [];
-  return result;
+void helpInfo(){
+  String myHelpString = '--version     prints version info\n--help        prints this\n[code file]   run a program';
+  String helpString = getColoredString(
+    '$myHelpString',
+    'red'
+  );
+  print(helpString);
 }
 
+void versionInfo(){
+  String version = '1.0.0';
+  String rainbow = getEmoji('rainbow');
+  String infoString = 'Chromos $rainbow v.$version\nby Alexander Abraham, "The Black Unicorn"\nLicensed under the MIT license.';
+  String coloredInfo = getColoredString(
+    '$infoString',
+    'cyan'
+  );
+  print(coloredInfo);
+}
+
+void runCode(String progName){
+
+}
 
 
 String getFileContents(String fileName){
   return File(fileName).readAsStringSync();
 }
 
-void main(){
-  print(
-    tokenList(
-      retrieveData(
-        'sample.chr'
-      )
-    )
-  );
+void main(List<String> arguments){
+  if (arguments.length == 1){
+    if (arguments[0] == '--version'){
+      versionInfo();
+    }
+    else if (arguments[0] == '--help') {
+      helpInfo();
+    }
+    else {
+      try {
+        printColoredString('${getEmoji('naughtyface')} Running your code...\n\n', 'cyan');
+        runCode(arguments[1]);
+      } catch (e) {
+        printColoredString('${getEmoji('angryFace')} No valid input files!\n\n', 'red');
+        helpInfo();
+      }
+    }
+  }
+  else {
+    helpInfo();
+  }
 }

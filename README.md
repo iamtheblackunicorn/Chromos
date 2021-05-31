@@ -127,4 +127,4 @@ To view the changelog click [here](./CHANGELOG.md).
 ## Note :scroll:
 
 - *Chromos :rainbow:* by Alexander Abraham :black_heart: a.k.a. *"The Black Unicorn" :unicorn:*
-- Licensed under the MIT license.
+- Licensed under the MIT License.

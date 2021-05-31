@@ -120,6 +120,23 @@ To find a complete example of *Chromos* code, look in the example folder by clic
  <img src="assets/sample.png"/>
 </p>
 
+## Usage :hammer_and_pick:
+
+Once compiled, the tool can be used in the following ways:
+
+- Run an executable:
+```bash
+$ chromos yourcode.chr
+```
+- Get version info:
+```bash
+$ chromos --version
+```
+- Get helpful info:
+```bash
+$ chromos --help
+```
+
 ## Changelog :black_nib:
 
 To view the changelog click [here](./CHANGELOG.md).

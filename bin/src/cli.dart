@@ -38,8 +38,7 @@ void runProgram(String progName) {
     String data = blockData[key].join('');
     if (blockData[key].length > 1) {
       data = blockData[key].join(' ');
-    } else {
-    }
+    } else {}
     printColoredString(data, 'magenta');
   }
 }

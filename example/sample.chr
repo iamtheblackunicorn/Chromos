@@ -4,6 +4,11 @@ prog start
   message start => "1"
     00FF88
     0088AA
-  message end
+  message end => "1"
+
+  message start => "2"
+    00FF88
+    0088AA
+  message end => "2"
 
 prog end

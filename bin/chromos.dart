@@ -2,6 +2,23 @@ import 'dart:io';
 import 'package:harpo/harpo.dart';
 import 'package:termstyle/termstyle.dart';
 
+int searchForIndexFromString(List<Map<String, String>> base, String item, String data){
+  int result = 0;
+  for (int i = 0; i < base.length; i++){
+    Map<String, String> currMap = base[i];
+    String currKey = currMap.keys.elementAt(0);
+    String currData = currMap[currKey];
+    if (currKey == item && currData == data){
+      result = base.indexOf(currMap);
+      break;
+    }
+    else {
+      // Do nothing.
+    }
+  }
+  return result;
+}
+
 Map<String, String> getPatternData(
     String patternName, RegExp pattern, String subjectString) {
   Map<String, String> data = {};
@@ -26,8 +43,8 @@ Map<String, RegExp> patterns() {
     'COMPUTE_START':
         RegExp(r'\s\scompute\sstart\s(plus|minus|times|by)\s\=\>\s("[0-9]+")'),
     'HEXNUMBER': RegExp(r'\s\s\s\s([A-F0-9]+)'),
-    'MESSAGE_END': RegExp(r'(\s\smessage end)'),
-    'COMPUTE_END': RegExp(r'(\s\scompute end)'),
+    'MESSAGE_END': RegExp(r'\s\smessage\send\s\=\>\s("[0-9]+")'),
+    'COMPUTE_END': RegExp(r'\s\scompute\send\s\=\>\s("[0-9]+")'),
     'END': RegExp(r'(prog end)'),
   };
   return tokens;
@@ -86,22 +103,46 @@ Map<String, List<String>> isolateBlocks(String progName) {
   Map<String, List<String>> result = {};
   for (int i = 0; i < parseTreeLength; i++) {
     Map<String, String> currentMap = parseTree[i];
+    int mapIndex = parseTree.indexOf(currentMap);
     String currentKey = currentMap.keys.elementAt(0);
     String keyData = currentMap[currentKey];
+    if (currentKey == 'COMMENT') {}
+    else if (currentKey == 'START') {}
+    else if (currentKey == 'END') {}
+    else if (currentKey == 'MESSAGE_START') {
+      int endIndex = searchForIndexFromString(parseTree, 'MESSAGE_END', keyData);
+      int startIndex = mapIndex + 1;
+      int diff = endIndex - startIndex;
+      List<String> blockChars = [];
+      for (int t = startIndex; t < endIndex; t++ ){
+        Map<String,String> hexNumTokenPair = parseTree[t];
+        String tokenKey = hexNumTokenPair.keys.elementAt(0);
+        String hexNum = hexNumTokenPair[tokenKey];
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+          String numberChar = hexToDec(hexNum).toString();
+          blockChars.add(numberChar);
+        }
+        else {
+          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+          blockChars.add(alphaChar);
+        }
+      }
+      result.addAll({
+        keyData:blockChars
+      });
+    }
+    else {
+      // Do nothing.
+    }
   }
   return result;
 }
 
 void runProgram(String progName) {
-  Map<String, dynamic> blockData = isolateBlocks(progName);
+  Map<String, List<String>> blockData = isolateBlocks(progName);
+  print(blockData);
   for (int i = 0; i < blockData.length; i++) {
-    String blockName = blockData[i];
-    List<String> blockBricks = blockData[i][blockName];
-    String blockWall = blockBricks.join(' ');
-    if (blockWall == null || blockWall == '') {
-    } else {
-      printColoredString(blockWall, 'magenta');
-    }
+    print(blockData[i]);
   }
 }
 

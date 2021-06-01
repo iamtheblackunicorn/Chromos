@@ -19,6 +19,38 @@ int searchForIndexFromString(List<Map<String, String>> base, String item, String
   return result;
 }
 
+String addListOfNums(List<String> dataSet){
+  int result = int.parse(dataSet[0]);
+  for (int i = 1; i < dataSet.length; i++) {
+    result = result + int.parse(dataSet[i]);
+  }
+  return result.toString();
+}
+
+String subListOfNums(List<String> dataSet){
+  int result = int.parse(dataSet[0]);
+  for (int i = 1; i < dataSet.length; i++) {
+    result = result - int.parse(dataSet[i]);
+  }
+  return result.toString();
+}
+
+String mulListOfNums(List<String> dataSet){
+  int result = int.parse(dataSet[0]);
+  for (int i = 1; i < dataSet.length; i++) {
+    result = result * int.parse(dataSet[i]);
+  }
+  return result.toString();
+}
+
+String divListOfNums(List<String> dataSet){
+  int result = int.parse(dataSet[0]);
+  for (int i = 1; i < dataSet.length; i++) {
+    result = (result / int.parse(dataSet[i])).round();
+  }
+  return result.toString();
+}
+
 Map<String, String> getPatternData(
     String patternName, RegExp pattern, String subjectString) {
   Map<String, String> data = {};
@@ -40,8 +72,14 @@ Map<String, RegExp> patterns() {
     'START': RegExp(r'(prog start)'),
     'COMMENT': RegExp(r'\?\?\s(.*)'),
     'MESSAGE_START': RegExp(r'\s\smessage\sstart\s\=\>\s("[0-9]+")'),
-    'COMPUTE_START':
-        RegExp(r'\s\scompute\sstart\s(plus|minus|times|by)\s\=\>\s("[0-9]+")'),
+    'COMPUTE_PLUS_START':
+        RegExp(r'\s\scomputePlus\sstart\s\=\>\s("[0-9]+")'),
+    'COMPUTE_MINUS_START':
+        RegExp(r'\s\scomputeMinus\sstart\s\=\>\s("[0-9]+")'),
+    'COMPUTE_TIMES_START':
+        RegExp(r'\s\scomputeTimes\sstart\s\=\>\s("[0-9]+")'),
+    'COMPUTE_BY_START':
+        RegExp(r'\s\scomputeBy\sstart\s\=\>\s("[0-9]+")'),
     'HEXNUMBER': RegExp(r'\s\s\s\s([A-F0-9]+)'),
     'MESSAGE_END': RegExp(r'\s\smessage\send\s\=\>\s("[0-9]+")'),
     'COMPUTE_END': RegExp(r'\s\scompute\send\s\=\>\s("[0-9]+")'),
@@ -131,6 +169,98 @@ Map<String, List<String>> isolateBlocks(String progName) {
         keyData:blockChars
       });
     }
+    else if (currentKey == 'COMPUTE_PLUS_START') {
+      int endIndex = searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
+      int startIndex = mapIndex + 1;
+      int diff = endIndex - startIndex;
+      List<String> blockChars = [];
+      for (int t = startIndex; t < endIndex; t++ ){
+        Map<String,String> hexNumTokenPair = parseTree[t];
+        String tokenKey = hexNumTokenPair.keys.elementAt(0);
+        String hexNum = hexNumTokenPair[tokenKey];
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+          String numberChar = hexToDec(hexNum).toString();
+          blockChars.add(numberChar);
+        }
+        else {
+          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+          blockChars.add(alphaChar);
+        }
+      }
+      String res = addListOfNums(blockChars);
+      result.addAll({
+        keyData:[res]
+      });
+    }
+    else if (currentKey == 'COMPUTE_MINUS_START') {
+      int endIndex = searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
+      int startIndex = mapIndex + 1;
+      int diff = endIndex - startIndex;
+      List<String> blockChars = [];
+      for (int t = startIndex; t < endIndex; t++ ){
+        Map<String,String> hexNumTokenPair = parseTree[t];
+        String tokenKey = hexNumTokenPair.keys.elementAt(0);
+        String hexNum = hexNumTokenPair[tokenKey];
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+          String numberChar = hexToDec(hexNum).toString();
+          blockChars.add(numberChar);
+        }
+        else {
+          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+          blockChars.add(alphaChar);
+        }
+      }
+      String res = subListOfNums(blockChars);
+      result.addAll({
+        keyData:[res]
+      });
+    }
+    else if (currentKey == 'COMPUTE_TIMES_START') {
+      int endIndex = searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
+      int startIndex = mapIndex + 1;
+      int diff = endIndex - startIndex;
+      List<String> blockChars = [];
+      for (int t = startIndex; t < endIndex; t++ ){
+        Map<String,String> hexNumTokenPair = parseTree[t];
+        String tokenKey = hexNumTokenPair.keys.elementAt(0);
+        String hexNum = hexNumTokenPair[tokenKey];
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+          String numberChar = hexToDec(hexNum).toString();
+          blockChars.add(numberChar);
+        }
+        else {
+          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+          blockChars.add(alphaChar);
+        }
+      }
+      String res = mulListOfNums(blockChars);
+      result.addAll({
+        keyData:[res]
+      });
+    }
+    else if (currentKey == 'COMPUTE_BY_START') {
+      int endIndex = searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
+      int startIndex = mapIndex + 1;
+      int diff = endIndex - startIndex;
+      List<String> blockChars = [];
+      for (int t = startIndex; t < endIndex; t++ ){
+        Map<String,String> hexNumTokenPair = parseTree[t];
+        String tokenKey = hexNumTokenPair.keys.elementAt(0);
+        String hexNum = hexNumTokenPair[tokenKey];
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+          String numberChar = hexToDec(hexNum).toString();
+          blockChars.add(numberChar);
+        }
+        else {
+          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+          blockChars.add(alphaChar);
+        }
+      }
+      String res = divListOfNums(blockChars);
+      result.addAll({
+        keyData:[res]
+      });
+    }
     else {
       // Do nothing.
     }
@@ -142,7 +272,6 @@ void runProgram(String progName) {
   Map<String, List<String>> blockData = isolateBlocks(progName);
   print(blockData);
   for (int i = 0; i < blockData.length; i++) {
-    print(blockData[i]);
   }
 }
 

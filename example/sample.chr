@@ -6,9 +6,24 @@ prog start
     0088AA
   message end => "1"
 
-  message start => "2"
+  computePlus start => "2"
     00FF88
     0088AA
-  message end => "2"
+  compute end => "2"
+
+  computeMinus start => "2"
+    00FF88
+    0088AA
+  compute end => "2"
+
+  computeTimes start => "2"
+    00FF88
+    0088AA
+  compute end => "2"
+
+  computeBy start => "2"
+    00FF88
+    0088AA
+  compute end => "2"
 
 prog end

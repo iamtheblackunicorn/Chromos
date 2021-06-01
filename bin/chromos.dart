@@ -80,16 +80,33 @@ void versionInfo() {
   print(coloredInfo);
 }
 
-Map<String, dynamic> runProgram(String progName) {
+Map<String, List<String>> isolateBlocks(String progName) {
   var parseTree = retrieveData(progName);
   int parseTreeLength = parseTree.length;
-  Map<String, dynamic> result = {};
+  Map<String, List<String>> result = {};
   for (int i = 0; i < parseTreeLength; i++) {
     Map<String, String> currentMap = parseTree[i];
     String currentKey = currentMap.keys.elementAt(0);
     String keyData = currentMap[currentKey];
+
   }
   return result;
+}
+
+void runProgram(String progName){
+  Map<String, dynamic> blockData = isolateBlocks(progName);
+  for (int i = 0; i < blockData.length; i++) {
+    String blockName = blockData[i];
+    String List<String> blockBricks = blockData[i][blockName];
+    String blockWall = blockBricks.join(' ');
+    if (blockWall == null || blockWall == ''){}
+    else {
+      printColoredString(
+        blockWall,
+        'magenta'
+      );
+    }
+  }
 }
 
 String getFileContents(String fileName) {

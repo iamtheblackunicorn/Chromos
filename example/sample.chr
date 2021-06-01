@@ -1,6 +1,6 @@
 prog start
 
-  ?? This is a comment.
+  // This is a comment.
   message start => "1"
     00FF88
     0088AA
@@ -11,19 +11,19 @@ prog start
     0088AA
   compute end => "2"
 
-  computeMinus start => "2"
+  computeMinus start => "3"
     00FF88
     0088AA
-  compute end => "2"
+  compute end => "3"
 
-  computeTimes start => "2"
+  computeTimes start => "4"
     00FF88
     0088AA
-  compute end => "2"
+  compute end => "4"
 
-  computeBy start => "2"
+  computeBy start => "5"
     00FF88
     0088AA
-  compute end => "2"
+  compute end => "5"
 
 prog end

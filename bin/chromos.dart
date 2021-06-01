@@ -70,19 +70,19 @@ Map<String, String> getPatternData(
 Map<String, RegExp> patterns() {
   Map<String, RegExp> tokens = {
     'START': RegExp(r'(prog start)'),
-    'COMMENT': RegExp(r'\?\?\s(.*)'),
-    'MESSAGE_START': RegExp(r'\s\smessage\sstart\s\=\>\s("[0-9]+")'),
+    'COMMENT': RegExp(r'\/\/\s(.*)'),
+    'MESSAGE_START': RegExp(r'\s\smessage\sstart\s\=\>\s"([0-9]+)"'),
     'COMPUTE_PLUS_START':
-        RegExp(r'\s\scomputePlus\sstart\s\=\>\s("[0-9]+")'),
+        RegExp(r'\s\scomputePlus\sstart\s\=\>\s"([0-9]+)"'),
     'COMPUTE_MINUS_START':
-        RegExp(r'\s\scomputeMinus\sstart\s\=\>\s("[0-9]+")'),
+        RegExp(r'\s\scomputeMinus\sstart\s\=\>\s"([0-9]+)"'),
     'COMPUTE_TIMES_START':
-        RegExp(r'\s\scomputeTimes\sstart\s\=\>\s("[0-9]+")'),
+        RegExp(r'\s\scomputeTimes\sstart\s\=\>\s"([0-9]+)"'),
     'COMPUTE_BY_START':
-        RegExp(r'\s\scomputeBy\sstart\s\=\>\s("[0-9]+")'),
+        RegExp(r'\s\scomputeBy\sstart\s\=\>\s"([0-9]+)"'),
     'HEXNUMBER': RegExp(r'\s\s\s\s([A-F0-9]+)'),
-    'MESSAGE_END': RegExp(r'\s\smessage\send\s\=\>\s("[0-9]+")'),
-    'COMPUTE_END': RegExp(r'\s\scompute\send\s\=\>\s("[0-9]+")'),
+    'MESSAGE_END': RegExp(r'\s\smessage\send\s\=\>\s"([0-9]+)"'),
+    'COMPUTE_END': RegExp(r'\s\scompute\send\s\=\>\s"([0-9]+)"'),
     'END': RegExp(r'(prog end)'),
   };
   return tokens;
@@ -270,8 +270,19 @@ Map<String, List<String>> isolateBlocks(String progName) {
 
 void runProgram(String progName) {
   Map<String, List<String>> blockData = isolateBlocks(progName);
-  print(blockData);
   for (int i = 0; i < blockData.length; i++) {
+    String key = blockData.keys.elementAt(i);
+    String data = blockData[key].join('');
+    if (blockData[key].length > 1){
+      data = blockData[key].join(' ');
+    }
+    else {
+      // Do nothing.
+    }
+    printColoredString(
+      data,
+      'magenta'
+    ); // Executes the code.
   }
 }
 

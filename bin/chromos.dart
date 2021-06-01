@@ -2,24 +2,24 @@ import 'dart:io';
 import 'package:harpo/harpo.dart';
 import 'package:termstyle/termstyle.dart';
 
-int searchForIndexFromString(List<Map<String, String>> base, String item, String data){
+int searchForIndexFromString(
+    List<Map<String, String>> base, String item, String data) {
   int result = 0;
-  for (int i = 0; i < base.length; i++){
+  for (int i = 0; i < base.length; i++) {
     Map<String, String> currMap = base[i];
     String currKey = currMap.keys.elementAt(0);
     String currData = currMap[currKey];
-    if (currKey == item && currData == data){
+    if (currKey == item && currData == data) {
       result = base.indexOf(currMap);
       break;
-    }
-    else {
+    } else {
       // Do nothing.
     }
   }
   return result;
 }
 
-String addListOfNums(List<String> dataSet){
+String addListOfNums(List<String> dataSet) {
   int result = int.parse(dataSet[0]);
   for (int i = 1; i < dataSet.length; i++) {
     result = result + int.parse(dataSet[i]);
@@ -27,7 +27,7 @@ String addListOfNums(List<String> dataSet){
   return result.toString();
 }
 
-String subListOfNums(List<String> dataSet){
+String subListOfNums(List<String> dataSet) {
   int result = int.parse(dataSet[0]);
   for (int i = 1; i < dataSet.length; i++) {
     result = result - int.parse(dataSet[i]);
@@ -35,7 +35,7 @@ String subListOfNums(List<String> dataSet){
   return result.toString();
 }
 
-String mulListOfNums(List<String> dataSet){
+String mulListOfNums(List<String> dataSet) {
   int result = int.parse(dataSet[0]);
   for (int i = 1; i < dataSet.length; i++) {
     result = result * int.parse(dataSet[i]);
@@ -43,7 +43,7 @@ String mulListOfNums(List<String> dataSet){
   return result.toString();
 }
 
-String divListOfNums(List<String> dataSet){
+String divListOfNums(List<String> dataSet) {
   int result = int.parse(dataSet[0]);
   for (int i = 1; i < dataSet.length; i++) {
     result = (result / int.parse(dataSet[i])).round();
@@ -72,14 +72,10 @@ Map<String, RegExp> patterns() {
     'START': RegExp(r'(prog start)'),
     'COMMENT': RegExp(r'\/\/\s(.*)'),
     'MESSAGE_START': RegExp(r'\s\smessage\sstart\s\=\>\s"([0-9]+)"'),
-    'COMPUTE_PLUS_START':
-        RegExp(r'\s\scomputePlus\sstart\s\=\>\s"([0-9]+)"'),
-    'COMPUTE_MINUS_START':
-        RegExp(r'\s\scomputeMinus\sstart\s\=\>\s"([0-9]+)"'),
-    'COMPUTE_TIMES_START':
-        RegExp(r'\s\scomputeTimes\sstart\s\=\>\s"([0-9]+)"'),
-    'COMPUTE_BY_START':
-        RegExp(r'\s\scomputeBy\sstart\s\=\>\s"([0-9]+)"'),
+    'COMPUTE_PLUS_START': RegExp(r'\s\scomputePlus\sstart\s\=\>\s"([0-9]+)"'),
+    'COMPUTE_MINUS_START': RegExp(r'\s\scomputeMinus\sstart\s\=\>\s"([0-9]+)"'),
+    'COMPUTE_TIMES_START': RegExp(r'\s\scomputeTimes\sstart\s\=\>\s"([0-9]+)"'),
+    'COMPUTE_BY_START': RegExp(r'\s\scomputeBy\sstart\s\=\>\s"([0-9]+)"'),
     'HEXNUMBER': RegExp(r'\s\s\s\s([A-F0-9]+)'),
     'MESSAGE_END': RegExp(r'\s\smessage\send\s\=\>\s"([0-9]+)"'),
     'COMPUTE_END': RegExp(r'\s\scompute\send\s\=\>\s"([0-9]+)"'),
@@ -144,124 +140,117 @@ Map<String, List<String>> isolateBlocks(String progName) {
     int mapIndex = parseTree.indexOf(currentMap);
     String currentKey = currentMap.keys.elementAt(0);
     String keyData = currentMap[currentKey];
-    if (currentKey == 'COMMENT') {}
-    else if (currentKey == 'START') {}
-    else if (currentKey == 'END') {}
-    else if (currentKey == 'MESSAGE_START') {
-      int endIndex = searchForIndexFromString(parseTree, 'MESSAGE_END', keyData);
+    if (currentKey == 'COMMENT') {
+    } else if (currentKey == 'START') {
+    } else if (currentKey == 'END') {
+    } else if (currentKey == 'MESSAGE_START') {
+      int endIndex =
+          searchForIndexFromString(parseTree, 'MESSAGE_END', keyData);
       int startIndex = mapIndex + 1;
       int diff = endIndex - startIndex;
       List<String> blockChars = [];
-      for (int t = startIndex; t < endIndex; t++ ){
-        Map<String,String> hexNumTokenPair = parseTree[t];
+      for (int t = startIndex; t < endIndex; t++) {
+        Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
         String hexNum = hexNumTokenPair[tokenKey];
-        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
-        }
-        else {
-          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+        } else {
+          String alphaChar = decryptLetter(1, hexToDec(hexNum));
           blockChars.add(alphaChar);
         }
       }
-      result.addAll({
-        keyData:blockChars
-      });
-    }
-    else if (currentKey == 'COMPUTE_PLUS_START') {
-      int endIndex = searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
+      result.addAll({keyData: blockChars});
+    } else if (currentKey == 'COMPUTE_PLUS_START') {
+      int endIndex =
+          searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
       int startIndex = mapIndex + 1;
       int diff = endIndex - startIndex;
       List<String> blockChars = [];
-      for (int t = startIndex; t < endIndex; t++ ){
-        Map<String,String> hexNumTokenPair = parseTree[t];
+      for (int t = startIndex; t < endIndex; t++) {
+        Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
         String hexNum = hexNumTokenPair[tokenKey];
-        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
-        }
-        else {
-          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+        } else {
+          String alphaChar = decryptLetter(1, hexToDec(hexNum));
           blockChars.add(alphaChar);
         }
       }
       String res = addListOfNums(blockChars);
       result.addAll({
-        keyData:[res]
+        keyData: [res]
       });
-    }
-    else if (currentKey == 'COMPUTE_MINUS_START') {
-      int endIndex = searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
+    } else if (currentKey == 'COMPUTE_MINUS_START') {
+      int endIndex =
+          searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
       int startIndex = mapIndex + 1;
       int diff = endIndex - startIndex;
       List<String> blockChars = [];
-      for (int t = startIndex; t < endIndex; t++ ){
-        Map<String,String> hexNumTokenPair = parseTree[t];
+      for (int t = startIndex; t < endIndex; t++) {
+        Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
         String hexNum = hexNumTokenPair[tokenKey];
-        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
-        }
-        else {
-          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+        } else {
+          String alphaChar = decryptLetter(1, hexToDec(hexNum));
           blockChars.add(alphaChar);
         }
       }
       String res = subListOfNums(blockChars);
       result.addAll({
-        keyData:[res]
+        keyData: [res]
       });
-    }
-    else if (currentKey == 'COMPUTE_TIMES_START') {
-      int endIndex = searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
+    } else if (currentKey == 'COMPUTE_TIMES_START') {
+      int endIndex =
+          searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
       int startIndex = mapIndex + 1;
       int diff = endIndex - startIndex;
       List<String> blockChars = [];
-      for (int t = startIndex; t < endIndex; t++ ){
-        Map<String,String> hexNumTokenPair = parseTree[t];
+      for (int t = startIndex; t < endIndex; t++) {
+        Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
         String hexNum = hexNumTokenPair[tokenKey];
-        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
-        }
-        else {
-          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+        } else {
+          String alphaChar = decryptLetter(1, hexToDec(hexNum));
           blockChars.add(alphaChar);
         }
       }
       String res = mulListOfNums(blockChars);
       result.addAll({
-        keyData:[res]
+        keyData: [res]
       });
-    }
-    else if (currentKey == 'COMPUTE_BY_START') {
-      int endIndex = searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
+    } else if (currentKey == 'COMPUTE_BY_START') {
+      int endIndex =
+          searchForIndexFromString(parseTree, 'COMPUTE_END', keyData);
       int startIndex = mapIndex + 1;
       int diff = endIndex - startIndex;
       List<String> blockChars = [];
-      for (int t = startIndex; t < endIndex; t++ ){
-        Map<String,String> hexNumTokenPair = parseTree[t];
+      for (int t = startIndex; t < endIndex; t++) {
+        Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
         String hexNum = hexNumTokenPair[tokenKey];
-        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25){
+        if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
-        }
-        else {
-          String alphaChar = decryptLetter(1,hexToDec(hexNum));
+        } else {
+          String alphaChar = decryptLetter(1, hexToDec(hexNum));
           blockChars.add(alphaChar);
         }
       }
       String res = divListOfNums(blockChars);
       result.addAll({
-        keyData:[res]
+        keyData: [res]
       });
-    }
-    else {
+    } else {
       // Do nothing.
     }
   }
@@ -273,16 +262,12 @@ void runProgram(String progName) {
   for (int i = 0; i < blockData.length; i++) {
     String key = blockData.keys.elementAt(i);
     String data = blockData[key].join('');
-    if (blockData[key].length > 1){
+    if (blockData[key].length > 1) {
       data = blockData[key].join(' ');
-    }
-    else {
+    } else {
       // Do nothing.
     }
-    printColoredString(
-      data,
-      'magenta'
-    ); // Executes the code.
+    printColoredString(data, 'magenta'); // Executes the code.
   }
 }
 

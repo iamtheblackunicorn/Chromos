@@ -50,6 +50,8 @@ If you want to see how the operators of *Chromos* work, here's an example:
 
 prog start
 
+  // Prints out some calculations.
+
   message start => "1"
     00FF88
     0088AA

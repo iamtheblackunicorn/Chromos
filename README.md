@@ -22,6 +22,7 @@ my own design and conception.
 - [Language tour](info/LANGUAGE.markdown) :book:
 - [Installation](info/INSTALLATION.markdown) :inbox_tray:
 - [Usage](info/USAGE.markdown) :hammer_and_pick:
+- [Examples](info/EXAMPLES.markdown) :honey_pot:
 
 ## Changelog :black_nib:
 

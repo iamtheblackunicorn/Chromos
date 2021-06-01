@@ -1,15 +1,21 @@
 prog start
+
   // Prints out "HELLO WORLD".
+  
   message start => "01"
     000008
     000005
     00000C
     00000C
     00000F
+  message end => "01"
+  
+  message start => "02"
     000017
     00000F
     000012
     00000C
     000004
-  message end => "01"
+  message end => "02"
+  
 prog end

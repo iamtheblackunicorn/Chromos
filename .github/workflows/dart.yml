@@ -17,4 +17,4 @@ jobs:
       - name: Analyze project source
         run: dart analyze
       - name: Compile and run sample program
-        run: dart compile exe bin/chromos.dart && mv bin/chromos.exe . && mv chromos.exe chromos && chmod a+x chromos && ./chromos --version && ./chromos --help && ./chromos example/sample.chr
+        run: dart compile exe bin/chromos.dart && mv bin/chromos.exe . && mv chromos.exe chromos && chmod a+x chromos && ./chromos --version && ./chromos --help && ./chromos example/sample.chr && ./chromos example/hello.chr 

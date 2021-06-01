@@ -13,7 +13,8 @@ int searchForIndexFromString(
   for (int i = 0; i < base.length; i++) {
     Map<String, String> currMap = base[i];
     String currKey = currMap.keys.elementAt(0);
-    String currData = currMap[currKey];
+    String currData = currMap[currKey] as String;
+    assert(currData is String);
     if (currKey == item && currData == data) {
       result = base.indexOf(currMap);
       break;

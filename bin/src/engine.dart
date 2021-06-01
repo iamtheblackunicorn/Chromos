@@ -20,7 +20,8 @@ Map<String, String> getPatternData(
     Match lineMatchGroups = matchObj.elementAt(x);
     int groupLength = lineMatchGroups.groupCount + 1;
     for (int z = 1; z < groupLength; z++) {
-      String matchData = lineMatchGroups.group(z);
+      String matchData = lineMatchGroups.group(z) as String;
+      assert(matchData is String);
       data.addAll({patternName: matchData});
     }
   }
@@ -37,8 +38,10 @@ List<Map<String, String>> retrieveData(String prog) {
   for (int i = 0; i < codeList.length; i++) {
     String subjectString = codeList[i];
     for (int x = 0; x < tokens.length; x++) {
-      String tokenKey = tokens.keys.elementAt(x);
-      RegExp token = tokens[tokenKey];
+      String tokenKey = tokens.keys.elementAt(x) as String;
+      assert(tokenKey is String);
+      RegExp token = tokens[tokenKey] as RegExp;
+      assert(token is RegExp);
       Map<String, String> progPatternData =
           getPatternData(tokenKey, token, subjectString);
       if (progPatternData.isEmpty == true || progPatternData == null) {
@@ -59,8 +62,10 @@ Map<String, List<String>> isolateBlocks(String progName) {
   for (int i = 0; i < parseTreeLength; i++) {
     Map<String, String> currentMap = parseTree[i];
     int mapIndex = parseTree.indexOf(currentMap);
-    String currentKey = currentMap.keys.elementAt(0);
-    String keyData = currentMap[currentKey];
+    String currentKey = currentMap.keys.elementAt(0) as String;
+    assert(currentKey is String);
+    String keyData = currentMap[currentKey] as String;
+    assert(keyData is String);
     if (currentKey == 'COMMENT') {
     } else if (currentKey == 'START') {
     } else if (currentKey == 'END') {
@@ -73,7 +78,8 @@ Map<String, List<String>> isolateBlocks(String progName) {
       for (int t = startIndex; t < endIndex; t++) {
         Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
-        String hexNum = hexNumTokenPair[tokenKey];
+        String hexNum = hexNumTokenPair[tokenKey] as String;
+        assert(hexNum is String);
         if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
@@ -92,7 +98,8 @@ Map<String, List<String>> isolateBlocks(String progName) {
       for (int t = startIndex; t < endIndex; t++) {
         Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
-        String hexNum = hexNumTokenPair[tokenKey];
+        String hexNum = hexNumTokenPair[tokenKey] as String;
+        assert(hexNum is String);
         if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
@@ -114,7 +121,8 @@ Map<String, List<String>> isolateBlocks(String progName) {
       for (int t = startIndex; t < endIndex; t++) {
         Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
-        String hexNum = hexNumTokenPair[tokenKey];
+        String hexNum = hexNumTokenPair[tokenKey] as String;
+        assert(hexNum is String);
         if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
@@ -136,7 +144,8 @@ Map<String, List<String>> isolateBlocks(String progName) {
       for (int t = startIndex; t < endIndex; t++) {
         Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
-        String hexNum = hexNumTokenPair[tokenKey];
+        String hexNum = hexNumTokenPair[tokenKey] as String;
+        assert(hexNum is String);
         if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);
@@ -158,7 +167,8 @@ Map<String, List<String>> isolateBlocks(String progName) {
       for (int t = startIndex; t < endIndex; t++) {
         Map<String, String> hexNumTokenPair = parseTree[t];
         String tokenKey = hexNumTokenPair.keys.elementAt(0);
-        String hexNum = hexNumTokenPair[tokenKey];
+        String hexNum = hexNumTokenPair[tokenKey] as String;
+        assert(hexNum is String);
         if (hexToDec(hexNum) > 26 || hexToDec(hexNum) > 25) {
           String numberChar = hexToDec(hexNum).toString();
           blockChars.add(numberChar);

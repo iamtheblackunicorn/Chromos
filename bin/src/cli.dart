@@ -33,11 +33,16 @@ void versionInfo() {
 /// and prints out the result.
 void runProgram(String progName) {
   Map<String, List<String>> blockData = isolateBlocks(progName);
-  for (int i = 0; i < blockData.length; i++) {
+  int blockLen = blockData.length as int;
+  assert(blockLen is int);
+  for (int i = 0; i < blockLen; i++) {
     String key = blockData.keys.elementAt(i);
-    String data = blockData[key].join('');
-    if (blockData[key].length > 1) {
-      data = blockData[key].join(' ');
+    String data = blockData[key]?.join('') as String;
+    assert(data is String);
+    int myNewLength = blockData[key]?.length as int;
+    assert(myNewLength is int);
+    if (myNewLength > 1) {
+      if (blockData[key] == null) data = blockData[key]!.join(' ');
     } else {}
     printColoredString(data, 'magenta');
   }

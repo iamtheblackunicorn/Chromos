@@ -56,7 +56,3 @@ Comments in *Chromos* are written like this:
 ```dart
 // This is a comment.
 ```
-
-### Complete example
-
-To find a complete example of *Chromos* code, look in the example folder by clicking [here](../example/sample.chr).

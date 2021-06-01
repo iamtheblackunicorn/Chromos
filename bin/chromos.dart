@@ -88,23 +88,19 @@ Map<String, List<String>> isolateBlocks(String progName) {
     Map<String, String> currentMap = parseTree[i];
     String currentKey = currentMap.keys.elementAt(0);
     String keyData = currentMap[currentKey];
-
   }
   return result;
 }
 
-void runProgram(String progName){
+void runProgram(String progName) {
   Map<String, dynamic> blockData = isolateBlocks(progName);
   for (int i = 0; i < blockData.length; i++) {
     String blockName = blockData[i];
-    String List<String> blockBricks = blockData[i][blockName];
+    List<String> blockBricks = blockData[i][blockName];
     String blockWall = blockBricks.join(' ');
-    if (blockWall == null || blockWall == ''){}
-    else {
-      printColoredString(
-        blockWall,
-        'magenta'
-      );
+    if (blockWall == null || blockWall == '') {
+    } else {
+      printColoredString(blockWall, 'magenta');
     }
   }
 }
